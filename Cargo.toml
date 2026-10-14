@@ -8,6 +8,9 @@ eframe = "0.36.2"
 egui = "0.36.2"
 egui_extras = { version = "0.36.2", features = ["image", "http"] }
 env_logger = "0.11.11"
+# Also load-bearing for cover images: egui_extras's "image" feature pulls in
+# `image` with no format decoders at all, so these features are what let
+# covers load. They're the formats AniList serves.
 image = { version = "0.25.10", default-features = false, features = ["jpeg", "png", "webp"] }
 rusqlite = { version = "0.40.2", features = ["bundled"] }
 serde = { version = "1.0.229", features = ["derive"] }

@@ -333,6 +333,8 @@ impl AniRecoApp {
         action: &mut Option<Action>,
     ) {
         ui.horizontal(|ui| {
+            // Columns inherit the wide inter-column gutter; reset it for the header row.
+            ui.spacing_mut().item_spacing.x = 8.0;
             let (dot, _) = ui.allocate_exact_size(egui::vec2(8.0, 8.0), egui::Sense::hover());
             ui.painter().circle_filled(dot.center(), 4.0, dot_color);
             ui.label(
