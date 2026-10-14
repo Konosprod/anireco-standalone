@@ -44,6 +44,30 @@ pub fn card_shadow(strength: f32) -> Shadow {
     }
 }
 
+pub fn primary_button(text: &str, size: f32) -> egui::Button<'static> {
+    egui::Button::new(
+        egui::RichText::new(text)
+            .size(size)
+            .family(family(FONT_MEDIUM))
+            .color(Color32::WHITE),
+    )
+    .fill(ACCENT)
+    .stroke(Stroke::NONE)
+    .corner_radius(CornerRadius::same(RADIUS_SM))
+}
+
+pub fn secondary_button(text: &str, size: f32) -> egui::Button<'static> {
+    egui::Button::new(
+        egui::RichText::new(text)
+            .size(size)
+            .family(family(FONT_MEDIUM))
+            .color(ACCENT),
+    )
+    .fill(SURFACE)
+    .stroke(Stroke::new(1.0, BORDER))
+    .corner_radius(CornerRadius::same(RADIUS_SM))
+}
+
 fn install_fonts(ctx: &egui::Context) {
     let mut fonts = FontDefinitions::default();
 

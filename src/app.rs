@@ -466,34 +466,16 @@ impl AniRecoApp {
         let button_width = (buttons_rect.width() - 8.0) / 2.0;
         let button_size = egui::vec2(button_width, BUTTON_HEIGHT);
 
-        let recos = egui::Button::new(
-            RichText::new("Recos")
-                .size(12.5)
-                .family(theme::family(theme::FONT_MEDIUM))
-                .color(Color32::WHITE),
-        )
-        .fill(theme::ACCENT)
-        .stroke(Stroke::NONE)
-        .corner_radius(CornerRadius::same(theme::RADIUS_SM));
         if buttons
-            .add_sized(button_size, recos)
+            .add_sized(button_size, theme::primary_button("Recos", 12.5))
             .on_hover_text("Voir les recommandations pour cet anime")
             .clicked()
         {
             *action = Some(Action::Select(idx));
         }
 
-        let anilist = egui::Button::new(
-            RichText::new("AniList")
-                .size(12.5)
-                .family(theme::family(theme::FONT_MEDIUM))
-                .color(theme::ACCENT),
-        )
-        .fill(theme::SURFACE)
-        .stroke(Stroke::new(1.0, theme::BORDER))
-        .corner_radius(CornerRadius::same(theme::RADIUS_SM));
         let anilist = buttons.add_enabled_ui(!anime.site_url.is_empty(), |ui| {
-            ui.add_sized(button_size, anilist)
+            ui.add_sized(button_size, theme::secondary_button("AniList", 12.5))
                 .on_hover_text("Ouvrir la page AniList")
         });
         if anilist.inner.clicked() {

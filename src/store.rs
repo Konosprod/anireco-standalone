@@ -5,6 +5,7 @@
 
 use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
+use std::path::{Path, PathBuf};
 
 #[derive(Debug, Clone, Default, Deserialize)]
 pub struct Tag {
@@ -105,8 +106,43 @@ fn decode_vector(blob: &[u8]) -> Vec<f32> {
     chunks.iter().map(|c| f32::from_le_bytes(*c)).collect()
 }
 
-pub fn load(path: &str) -> rusqlite::Result<Store> {
-    let conn = rusqlite::Connection::open(path)?;
+pub enum LoadError {
+    /// None of the candidate paths exist.
+    Missing,
+    /// The file is a Git LFS pointer (repo cloned without git-lfs), not the database.
+    LfsPointer(PathBuf),
+    /// The file exists but couldn't be read as our database.
+    Invalid(PathBuf, rusqlite::Error),
+}
+
+/// Loads the first candidate path that exists.
+pub fn load_first(candidates: &[PathBuf]) -> Result<(Store, PathBuf), LoadError> {
+    let path = candidates
+        .iter()
+        .find(|p| p.is_file())
+        .ok_or(LoadError::Missing)?;
+
+    if is_lfs_pointer(path) {
+        return Err(LoadError::LfsPointer(path.clone()));
+    }
+
+    load(path)
+        .map(|store| (store, path.clone()))
+        .map_err(|err| LoadError::Invalid(path.clone(), err))
+}
+
+fn is_lfs_pointer(path: &Path) -> bool {
+    const PREFIX: &[u8] = b"version https://git-lfs";
+    let Ok(metadata) = std::fs::metadata(path) else {
+        return false;
+    };
+    metadata.len() < 1024 && std::fs::read(path).is_ok_and(|bytes| bytes.starts_with(PREFIX))
+}
+
+fn load(path: &Path) -> rusqlite::Result<Store> {
+    // Read-only: a plain `open` would silently create an empty file.
+    let conn =
+        rusqlite::Connection::open_with_flags(path, rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY)?;
     let mut stmt = conn.prepare(
         "SELECT id, title_english, title_native, title_romaji, description, genres, tags, \
                 site_url, cover, relations, recommendations, vector FROM anime",
