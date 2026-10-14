@@ -39,6 +39,10 @@ fn main() -> eframe::Result {
         Box::new(|cc| {
             egui_extras::install_image_loaders(&cc.egui_ctx);
             theme::install(&cc.egui_ctx);
+            // egui scrolls 40 pt per wheel notch by default, which crawls past
+            // ~360 pt tall cards; this matches what browsers do.
+            cc.egui_ctx
+                .options_mut(|o| o.input_options.line_scroll_speed = 100.0);
             Ok(Box::new(app::AniRecoApp::new(data_store)))
         }),
     )
