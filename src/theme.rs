@@ -48,9 +48,18 @@ fn install_fonts(ctx: &egui::Context) {
     let mut fonts = FontDefinitions::default();
 
     let faces: [(&str, &'static [u8]); 4] = [
-        ("Inter-Regular", include_bytes!("../assets/fonts/Inter-Regular.ttf")),
-        (FONT_MEDIUM, include_bytes!("../assets/fonts/Inter-Medium.ttf")),
-        (FONT_SEMIBOLD, include_bytes!("../assets/fonts/Inter-SemiBold.ttf")),
+        (
+            "Inter-Regular",
+            include_bytes!("../assets/fonts/Inter-Regular.ttf"),
+        ),
+        (
+            FONT_MEDIUM,
+            include_bytes!("../assets/fonts/Inter-Medium.ttf"),
+        ),
+        (
+            FONT_SEMIBOLD,
+            include_bytes!("../assets/fonts/Inter-SemiBold.ttf"),
+        ),
         (FONT_BOLD, include_bytes!("../assets/fonts/Inter-Bold.ttf")),
     ];
     for (name, bytes) in faces {
@@ -79,8 +88,14 @@ fn text_styles() -> std::collections::BTreeMap<TextStyle, FontId> {
         (TextStyle::Heading, FontId::new(22.0, family(FONT_SEMIBOLD))),
         (TextStyle::Body, FontId::new(14.0, FontFamily::Proportional)),
         (TextStyle::Button, FontId::new(14.0, family(FONT_MEDIUM))),
-        (TextStyle::Small, FontId::new(12.0, FontFamily::Proportional)),
-        (TextStyle::Monospace, FontId::new(13.0, FontFamily::Monospace)),
+        (
+            TextStyle::Small,
+            FontId::new(12.0, FontFamily::Proportional),
+        ),
+        (
+            TextStyle::Monospace,
+            FontId::new(13.0, FontFamily::Monospace),
+        ),
     ]
     .into_iter()
     .collect()
@@ -119,7 +134,8 @@ fn visuals() -> egui::Visuals {
 
     visuals.widgets.noninteractive = widget_visuals(SURFACE, Stroke::new(1.0, BORDER));
     visuals.widgets.inactive = widget_visuals(SURFACE, Stroke::new(1.0, BORDER));
-    visuals.widgets.hovered = widget_visuals(INPUT_BG, Stroke::new(1.0, ACCENT.gamma_multiply(0.6)));
+    visuals.widgets.hovered =
+        widget_visuals(INPUT_BG, Stroke::new(1.0, ACCENT.gamma_multiply(0.6)));
     visuals.widgets.active = widget_visuals(INPUT_BG, Stroke::new(1.5, ACCENT));
     visuals.widgets.open = widget_visuals(INPUT_BG, Stroke::new(1.0, ACCENT));
 
