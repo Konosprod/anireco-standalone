@@ -19,5 +19,3 @@ cargo run --release -- data/anime.db
 ```
 
 `data/anime.db` (~400 MB) is stored with [Git LFS](https://git-lfs.com): install it before cloning, or run `git lfs pull` afterwards, otherwise you only get a small pointer file.
-
-Release binaries for each OS are built by GitHub Actions when a `v*.*.*` tag is pushed.
