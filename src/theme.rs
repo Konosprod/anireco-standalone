@@ -23,6 +23,8 @@ pub const ANILIST: Color32 = Color32::from_rgb(2, 128, 199);
 pub const BOTH: Color32 = Color32::from_rgb(22, 140, 94);
 pub const BOTH_SOFT_BG: Color32 = Color32::from_rgb(222, 245, 235);
 
+pub const ERROR: Color32 = Color32::from_rgb(196, 43, 43);
+
 pub const RADIUS_SM: u8 = 8;
 pub const RADIUS_MD: u8 = 12;
 

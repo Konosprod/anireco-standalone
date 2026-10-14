@@ -208,9 +208,11 @@ dependencies = [
  "egui_extras",
  "env_logger",
  "image",
+ "ring",
  "rusqlite",
  "serde",
  "serde_json",
+ "ureq",
 ]
 
 [[package]]

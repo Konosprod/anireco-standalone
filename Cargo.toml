@@ -12,9 +12,11 @@ env_logger = "0.11.11"
 # `image` with no format decoders at all, so these features are what let
 # covers load. They're the formats AniList serves.
 image = { version = "0.25.10", default-features = false, features = ["jpeg", "png", "webp"] }
+ring = "0.17.14"
 rusqlite = { version = "0.40.2", features = ["bundled"] }
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.154"
+ureq = "3.4.2"
 
 # Dependencies (egui's tessellator, image decoding, ...) dominate frame time;
 # optimizing them keeps debug builds smooth while our own code stays debuggable.

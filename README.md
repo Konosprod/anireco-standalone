@@ -14,8 +14,12 @@ A native desktop app: one executable plus one data file, no server, no browser. 
 
 ## Run
 
+Download the executable for your OS from the [latest release](https://github.com/Konosprod/anireco-standalone/releases/latest). On first launch, the app downloads its database (`anime.db`, ~400 MB, attached to the release) next to the executable.
+
+From a clone:
+
 ```sh
-cargo run --release -- data/anime.db
+cargo run --release
 ```
 
-`data/anime.db` (~400 MB) is stored with [Git LFS](https://git-lfs.com): install it before cloning, or run `git lfs pull` afterwards, otherwise you only get a small pointer file.
+`data/anime.db` is stored with [Git LFS](https://git-lfs.com): install it before cloning, or run `git lfs pull` afterwards, otherwise you only get a small pointer file.
