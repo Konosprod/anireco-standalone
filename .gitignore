@@ -1,4 +1,2 @@
-/data/*.db
-
 # Added by cargo
 /target
