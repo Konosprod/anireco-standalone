@@ -1,6 +1,19 @@
 mod app;
 mod recommend;
 mod store;
+mod theme;
+
+fn load_icon() -> egui::IconData {
+    let image = image::load_from_memory(include_bytes!("../assets/icon.png"))
+        .expect("bundled icon.png should decode")
+        .into_rgba8();
+    let (width, height) = image.dimensions();
+    egui::IconData {
+        rgba: image.into_raw(),
+        width,
+        height,
+    }
+}
 
 fn main() -> eframe::Result {
     env_logger::init();
@@ -14,7 +27,9 @@ fn main() -> eframe::Result {
     eprintln!("Loaded {} anime", data_store.all.len());
 
     let options = eframe::NativeOptions {
-        viewport: egui::ViewportBuilder::default().with_inner_size([1150.0, 820.0]),
+        viewport: egui::ViewportBuilder::default()
+            .with_inner_size([1150.0, 820.0])
+            .with_icon(load_icon()),
         ..Default::default()
     };
 
@@ -23,6 +38,7 @@ fn main() -> eframe::Result {
         options,
         Box::new(|cc| {
             egui_extras::install_image_loaders(&cc.egui_ctx);
+            theme::install(&cc.egui_ctx);
             Ok(Box::new(app::AniRecoApp::new(data_store)))
         }),
     )
